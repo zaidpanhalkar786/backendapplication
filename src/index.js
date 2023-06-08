@@ -1,12 +1,15 @@
 require('./models/User');
 require('./models/Track');
+require('./models/Skill')
 const express = require('express');
 const cors = require('cors')
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
 const trackRoutes = require('./routes/trackRoutes');
+const userRoutes = require('./routes/manageuserRoutes');
 const requireAuth = require('./middlewares/requireAuth');
+const skillRoutes = require('./routes/skillRoutes')
 
 const app = express();
 app.use(cors("*"));
@@ -36,6 +39,9 @@ app.get('/', requireAuth, (req, res) => {
   res.send(`Your email: ${req.user.email}`);
 });
 
+app.use('/',userRoutes)
+app.use('/',skillRoutes)
+
 app.listen(3001, () => {
-  console.log('Listening on port 3002');
+  console.log('Listening on port 3001');
 });

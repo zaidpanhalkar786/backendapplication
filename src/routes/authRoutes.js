@@ -31,11 +31,15 @@ router.post('/signin', async (req, res) => {
   if (!user) {
     return res.status(422).send({ error: 'Invalid password or email' });
   }
-    await user.comparePassword(password);
+    const isPasswordMatch = await user.comparePassword(password);
+    if (!isPasswordMatch) {
+      return res.status(422).send({ error: 'Invalid password or email' });
+    }
     const token = jwt.sign({ userId: user._id }, 'MY_SECRET_KEY');
+    const status = user.status
+    const role =  user.role // retrive the role from user object
+    res.send({token, role, status}); //Include role in the response
 
-    //console.log(firstname)
-    res.send({ token});
   } catch (err) {
     return res.status(422).send({ error: 'Invalid password or email' });
   }
