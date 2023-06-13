@@ -1,3 +1,5 @@
+
+
 const express = require('express');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
@@ -36,10 +38,10 @@ router.post('/signin', async (req, res) => {
       return res.status(422).send({ error: 'Invalid password or email' });
     }
     const token = jwt.sign({ userId: user._id }, 'MY_SECRET_KEY');
-    const status = user.status // retrive the status from user object
+    
+    const status = user.status
     const role =  user.role // retrive the role from user object
-  // retrive the first name from user object
-    res.send({token, role, status}); //Include role in the response
+    res.send({token, role, status,email}); //Include role in the response
 
   } catch (err) {
     return res.status(422).send({ error: 'Invalid password or email' });
