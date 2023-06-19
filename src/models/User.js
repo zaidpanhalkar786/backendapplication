@@ -26,8 +26,16 @@ const userSchema = new mongoose.Schema({
   status: {
     type: String,
     default: ''
+  },
+  mobileno: {
+    type: Number,
+    unique: true,
+    required: true
+  },
+  employeelevel:{
+    type: String,
+    required: true
   }
-
 });
 
 userSchema.pre('save', function(next) {

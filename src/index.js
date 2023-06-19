@@ -15,7 +15,7 @@ const userRoutes = require('./routes/manageuserRoutes');
 const requireAuth = require('./middlewares/requireAuth');
 const skillRoutes = require('./routes/skillRoutes');
 const manageuserRoutes = require('./routes/manageuserRoutes')
-
+const searchRoutes = require('./routes/searchRoutes')
 const app = express();
 app.use(cors("*"));
 app.use(bodyParser.json());
@@ -24,6 +24,7 @@ app.use(trackRoutes);
 app.use(employeeskillsRoutes);
 app.use(skillRoutes);
 app.use(manageuserRoutes)
+app.use(searchRoutes)
 
 //const mongoUri = "mongodb+srv://azureuser:india@123@cluster0.egb4t.azure.mongodb.net/trackServer?retryWrites=true&w=majority";
 const mongoUri = "mongodb+srv://zaidpanhalkar786:ZxpBFEFEBSz4BDef@cluster0.mijeqiy.mongodb.net/trackServer?retryWrites=true&w=majority";
@@ -50,7 +51,7 @@ app.get('/', requireAuth, (req, res) => {
 app.use('/',userRoutes)
 app.use('/',skillRoutes)
 app.use('/',employeeskillsRoutes)
-
+app.use('./',searchRoutes)
 
 app.listen(3001, () => {
   console.log('Listening on port 3001');

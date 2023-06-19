@@ -8,10 +8,11 @@ const User = mongoose.model('User');
 const router = express.Router();
 
 router.post('/signup', async (req, res) => {
-  const { email, password,firstname,lastname} = req.body;
+  
+    const { email, password,firstname,lastname,mobileno,employeelevel} = req.body;
 
   try {
-    const user = new User({ email, password, firstname, lastname });
+    const user = new User({ email, password, firstname, lastname, mobileno,employeelevel});
     await user.save();
 
     const token = jwt.sign({ userId: user._id }, 'MY_SECRET_KEY');
@@ -39,9 +40,14 @@ router.post('/signin', async (req, res) => {
     }
     const token = jwt.sign({ userId: user._id }, 'MY_SECRET_KEY');
     
+
+    const firstname = user.firstname
+    const lastname = user.lastname
+    const mobileno = user.mobileno
+    const employeelevel = user.employeelevel
     const status = user.status
     const role =  user.role // retrive the role from user object
-    res.send({token, role, status,email}); //Include role in the response
+    res.send({token, role, status,email,mobileno,employeelevel,firstname,lastname}); //Include role in the response
 
   } catch (err) {
     return res.status(422).send({ error: 'Invalid password or email' });
